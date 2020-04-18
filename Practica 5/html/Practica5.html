@@ -1,0 +1,254 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>practica 5. Series de Fourir en tiempo continuo.</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-17"><meta name="DC.source" content="Practica5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>practica 5. Series de Fourir en tiempo continuo.</h1><!--introduction--><p>Autor. Alvarado Angeles Francisco Javier.</p><p>Grupo: 2MV1.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Objetivos.</a></li><li><a href="#2">Introducci&oacute;n</a></li><li><a href="#3">Desarrollo.</a></li><li><a href="#4">Ejemplo 6.1</a></li><li><a href="#5">Ejemplo 6.2</a></li><li><a href="#7">Ejemplo 6.4</a></li><li><a href="#9">Ejemplo 6.5</a></li><li><a href="#11">Ejemplo 6.7</a></li></ul></div><h2 id="1">Objetivos.</h2><p>*Realizar gr&aacute;ficas de series de Fourier exponenciales y trigonom&eacute;tricas en tiempo continuo *Manipulaci&oacute;n de instrucciones en MATLAB *Calculo n&uacute;merico de los coeficientes de Fourier</p><h2 id="2">Introducci&oacute;n</h2><p>Los Dn se pueden encontrar usando la transformada de Fourier en tiempo discreto, en donde reciclan un cierto intervalo de una se&ntilde;al peri&oacute;dica alrededor de un periodo. Suponiendo que nuestro intervalo de muestreo lo representamos por una <img src="Practica5_eq14047577632175690031.png" alt="$T$">, nuestro n&uacute;mero de muestras en un periodo <img src="Practica5_eq09699377331652163485.png" alt="$T_0$"> esta representado por <img src="Practica5_eq11446108733363934681.png" alt="$N_0=T_0/T$">, nuestra relaci&oacute;n entre nuestros <img src="Practica5_eq10922897471658752443.png" alt="$D_n$"> y nuestra funci&oacute;n original esta dada por la siguiente ecuaci&oacute;n.</p><p><img src="Practica5_eq11021320515115894294.png" alt="$$D_{n}=\frac{1}{T_0}\int_{T_0}x(t)\exp{-jn\omega_0t} dt $$"></p><p><img src="Practica5_eq03456123147719428184.png" alt="$$\lim_{T \to 0}\frac{1}{N_0T}\sum_{k=0}^{N_0-1}x(KT)\exp^{-jn\omega_0 t}T$$"></p><p><img src="Practica5_eq17410007896747633193.png" alt="$$\lim_{T \to 0}\frac{1}{N_0}\sum_{k=0}^{N0-1}x(KT)exp^{-jn\Omega_0 k}...(a)$$"></p><p><img src="Practica5_eq06715379941904189002.png" alt="$$N_0=\frac{T_0}{t}; \Omega_0=\omega_0 T=\frac{2\pi}{N_0}...(b)$$"></p><p>Donde x(KT) representa la K-esima muestra de x(t). En la practica, es imposible hacer a <img src="Practica5_eq18435154723890088796.png" alt="$T \to 0$"> en la ecuaci&oacute;n (a), lo podemos hacer tan peque&ntilde;o como querramos pero nunca igual a cero, de echo esa es la definici&oacute;n del l&iacute;mite sino ser&iacute;a una evaluaci&oacute;n y no un l&iacute;mite.</p><h2 id="3">Desarrollo.</h2><h2 id="4">Ejemplo 6.1</h2><pre class="codeinput">d0 = 0.504;
+dn = @(n) ((0.504)*(1-4*n*j))/(1+16*n.^2);
+t0 = 0;
+tf = pi;
+f = @(t) exp(-t/2);
+armo = 4;
+a = -7;
+b = 7;
+an= @(n) 0.504*(2/(1+16*n.^2));
+bn= @(n) 0.504*(8*n/1+16*n.^2);
+a0= 0.504;
+sfc(t0,tf,bn,an,a0,f,armo,a,b)
+sfc11(t0,tf,dn,d0,f,15,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_01.png" alt=""> <img vspace="5" hspace="5" src="Practica5_02.png" alt=""> <h2 id="5">Ejemplo 6.2</h2><p><img src="Practica5_eq14986614073587914034.png" alt="$$D_n=-\frac{12}{n^2\pi}\sin(\frac{n\pi}{2})$$"></p><p><img src="Practica5_eq02386516012700328247.png" alt="$$D_0=0$$"></p><pre class="codeinput">d0 = 0;
+dn = @(n) -(12/n.^2*pi)*(sin(n.*pi/2));
+t0 = -0,5;
+tf = 1.5;
+f = @(t) (6*t).*(abs(t)&lt;=0.5)+6*(1-t).*(0.5&lt;t &amp; t&lt;1.5);
+armo = 4;
+a = -30;
+b = 30;
+</pre><pre class="codeoutput">
+t0 =
+
+     0
+
+</pre><pre class="codeinput">sfc21(t0,tf,dn,d0,f,armo,a,b)
+sfc22(t0,tf,dn,d0,f,15,a,b)
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Using only the real component of complex data. 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Using only the real component of complex data. 
+</pre><img vspace="5" hspace="5" src="Practica5_03.png" alt=""> <img vspace="5" hspace="5" src="Practica5_04.png" alt=""> <h2 id="7">Ejemplo 6.4</h2><pre class="codeinput">t0 = -pi;
+tf = pi;
+d0 = 0.5;
+dn = @(n) (1/(n.*pi))*sin(n*pi/2);
+f = @(t) (1)*(-pi/2&lt;=t &amp; t&lt;=pi/2);
+armo = 4;
+a = -5*pi;
+b= 5*pi;
+</pre><pre class="codeinput">sfc31(t0,tf,dn,d0,f,armo,a,b)
+sfc32(t0,tf,dn,d0,f,15,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_05.png" alt=""> <img vspace="5" hspace="5" src="Practica5_06.png" alt=""> <h2 id="9">Ejemplo 6.5</h2><pre class="codeinput">t0=0;
+tf=pi;
+d0=0.504;
+dn= @(n) 0.504/(1+n*j*4);
+f=@(t) exp(-t/2);
+armo=4;
+a=-3*pi;
+b=3*pi;
+</pre><pre class="codeinput">sfc41(t0,tf,dn,d0,f,armo,a,b)
+sfc42(t0,tf,dn,d0,f,15,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_07.png" alt=""> <img vspace="5" hspace="5" src="Practica5_08.png" alt=""> <h2 id="11">Ejemplo 6.7</h2><pre class="codeinput">t0=-1.5;
+tf=1.5;
+d0=1/3;
+dn=@(n) 1/3;
+f=@(t) dirac(t);
+armo=4;
+a=-7.5;
+b=7.5;
+</pre><pre class="codeinput">sfc51(t0,tf,dn,d0,f,armo,a,b)
+<span class="comment">%sfc52(t0,tf,dn,d0,f,15,a,b)</span>
+</pre><img vspace="5" hspace="5" src="Practica5_09.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% practica 5. Series de Fourir en tiempo continuo.
+%
+% Autor. Alvarado Angeles Francisco Javier.
+%
+% Grupo: 2MV1.
+%% Objetivos.
+% 
+% *Realizar gráficas de series de Fourier exponenciales y trigonométricas en tiempo continuo
+% *Manipulación de instrucciones en MATLAB
+% *Calculo númerico de los coeficientes de Fourier
+%% Introducción
+% Los Dn se pueden encontrar usando la transformada de Fourier en tiempo discreto, en donde reciclan un cierto intervalo de una 
+% señal periódica alrededor de un periodo. Suponiendo que nuestro intervalo de muestreo lo representamos por una $T$, nuestro número
+% de muestras en un periodo $T_0$ esta representado por $N_0=T_0/T$, nuestra relación entre nuestros $D_n$ y nuestra función original 
+% esta dada por la siguiente ecuación.
+% 
+% $$D_{n}=\frac{1}{T_0}\int_{T_0}x(t)\exp{-jn\omega_0t} dt $$ 
+%
+% $$\lim_{T \to 0}\frac{1}{N_0T}\sum_{k=0}^{N_0-1}x(KT)\exp^{-jn\omega_0 t}T$$
+%
+% $$\lim_{T \to 0}\frac{1}{N_0}\sum_{k=0}^{N0-1}x(KT)exp^{-jn\Omega_0 k}...(a)$$
+%
+% $$N_0=\frac{T_0}{t}; \Omega_0=\omega_0 T=\frac{2\pi}{N_0}...(b)$$
+%
+% Donde x(KT) representa la K-esima muestra de x(t). En la practica, es
+% imposible hacer a $T \to 0$ en la ecuación (a), lo podemos hacer tan pequeño como querramos pero nunca igual a cero, de echo esa es la
+% definición del límite sino sería una evaluación y no un límite.  
+%
+%
+%% Desarrollo.
+%% Ejemplo 6.1
+% 
+d0 = 0.504;
+dn = @(n) ((0.504)*(1-4*n*j))/(1+16*n.^2);
+t0 = 0;
+tf = pi;
+f = @(t) exp(-t/2);
+armo = 4;
+a = -7;
+b = 7;
+an= @(n) 0.504*(2/(1+16*n.^2));
+bn= @(n) 0.504*(8*n/1+16*n.^2);
+a0= 0.504;
+sfc(t0,tf,bn,an,a0,f,armo,a,b)
+sfc11(t0,tf,dn,d0,f,15,a,b)
+
+%% Ejemplo 6.2
+%
+% $$D_n=-\frac{12}{n^2\pi}\sin(\frac{n\pi}{2})$$
+%
+% $$D_0=0$$
+%
+d0 = 0;
+dn = @(n) -(12/n.^2*pi)*(sin(n.*pi/2));
+t0 = -0,5;
+tf = 1.5;
+f = @(t) (6*t).*(abs(t)<=0.5)+6*(1-t).*(0.5<t & t<1.5);
+armo = 4;
+a = -30;
+b = 30;
+%%
+sfc21(t0,tf,dn,d0,f,armo,a,b)
+sfc22(t0,tf,dn,d0,f,15,a,b)
+%% Ejemplo 6.4
+%
+%
+%
+%
+%
+t0 = -pi;
+tf = pi;
+d0 = 0.5;
+dn = @(n) (1/(n.*pi))*sin(n*pi/2);
+f = @(t) (1)*(-pi/2<=t & t<=pi/2);
+armo = 4;
+a = -5*pi;
+b= 5*pi;
+%%
+sfc31(t0,tf,dn,d0,f,armo,a,b)
+sfc32(t0,tf,dn,d0,f,15,a,b)
+%% Ejemplo 6.5
+%
+%
+%
+%
+t0=0;
+tf=pi;
+d0=0.504;
+dn= @(n) 0.504/(1+n*j*4);
+f=@(t) exp(-t/2);
+armo=4;
+a=-3*pi;
+b=3*pi;
+%%
+sfc41(t0,tf,dn,d0,f,armo,a,b)
+sfc42(t0,tf,dn,d0,f,15,a,b)
+%% Ejemplo 6.7
+%
+%
+%
+%
+t0=-1.5;
+tf=1.5;
+d0=1/3;
+dn=@(n) 1/3;
+f=@(t) dirac(t);
+armo=4;
+a=-7.5;
+b=7.5;
+%%
+sfc51(t0,tf,dn,d0,f,armo,a,b)
+%sfc52(t0,tf,dn,d0,f,15,a,b)
+
+
+
+
+##### SOURCE END #####
+--></body></html>
